@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X, Plus, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Location, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
 const Login: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isRegistering, setIsRegistering] = useState(searchParams.get('register') === 'true');
+import { useNavigate, useLocation, Location } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+const Login: React.FC = () => {
+  const [isRegistering, setIsRegistering] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -60,6 +63,7 @@ const Login: React.FC = () => {
                   setIsRegistering(false);
                   setSearchParams({});
                 }}
+                onClick={() => setIsRegistering(false)}
                 className="text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Se connecter
@@ -74,6 +78,7 @@ const Login: React.FC = () => {
                   setIsRegistering(true);
                   setSearchParams({ register: 'true' });
                 }}
+                onClick={() => setIsRegistering(true)}
                 className="text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Créer un compte
