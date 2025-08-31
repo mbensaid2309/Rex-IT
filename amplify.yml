@@ -14,14 +14,16 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-  # ✅ Configuration cruciale pour les SPA React
-  customHeaders:
-    - pattern: '**/*'
-      headers:
-        - key: 'Cache-Control'
-          value: 'no-cache'
-  # ✅ Redirections pour SPA
-  redirects:
-    - source: '/<*>'
-      target: '/index.html'
-      status: '200'
+
+# ✅ Configuration cruciale pour les SPA React
+customHeaders:
+  - pattern: '**/*'
+    headers:
+      - key: 'Cache-Control'
+        value: 'no-cache'
+
+# ✅ Redirections pour SPA
+redirects:
+  - source: '/<*>'
+    target: '/index.html'
+    status: '200'
