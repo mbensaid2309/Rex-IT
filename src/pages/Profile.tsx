@@ -3,11 +3,13 @@ import { Calendar, MapPin, Link as LinkIcon, Award, BookOpen, ThumbsUp } from 'l
 import { Link } from 'react-router-dom';
 import REXCard from '../components/REXCard';
 import { mockUsers, mockREX } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 
 const Profile: React.FC = () => {
   // Using first user as current user for demo
   const user = mockUsers[0];
   const userREX = mockREX.filter(rex => rex.author.id === user.id);
+  const { isAuthenticated } = useAuth();
   
   const stats = [
     { icon: BookOpen, label: 'REX Publiés', value: userREX.length },
@@ -62,7 +64,7 @@ const Profile: React.FC = () => {
           {/* Action Button */}
           <div className="flex-shrink-0">
             <Link
-              to="/create"
+              to={isAuthenticated ? '/create' : '/login'}
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
               Nouveau REX
@@ -93,7 +95,7 @@ const Profile: React.FC = () => {
           </h2>
           {userREX.length === 0 && (
             <Link
-              to="/create"
+              to={isAuthenticated ? '/create' : '/login'}
               className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
             >
               Créer mon premier REX
@@ -111,7 +113,7 @@ const Profile: React.FC = () => {
               Partagez votre première expérience technique avec la communauté.
             </p>
             <Link
-              to="/create"
+              to={isAuthenticated ? '/create' : '/login'}
               className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
               Créer mon premier REX

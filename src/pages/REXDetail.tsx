@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Hash, Award, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar, Hash, Award, Share2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { mockREX, mockComments } from '../data/mockData';
 import VotingSystem from '../components/VotingSystem';
