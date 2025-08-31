@@ -1,13 +1,16 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { TrendingUp, Users, BookOpen, Award } from 'lucide-react';
 import REXCard from '../components/REXCard';
 import SearchAndFilters from '../components/SearchAndFilters';
 import { mockREX, mockTags } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 
 const Home: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedComplexity, setSelectedComplexity] = useState('');
+  const { isAuthenticated } = useAuth();
 
   const filteredREX = useMemo(() => {
     return mockREX.filter((rex) => {
@@ -118,12 +121,12 @@ const Home: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
             Vous avez vécu une expérience technique intéressante ? Aidez la communauté en partageant votre retour d'expérience.
           </p>
-          <a
-            href="/create"
+          <Link
+            to={isAuthenticated ? '/create' : '/login'}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             Créer mon premier REX
-          </a>
+          </Link>
         </div>
       )}
     </div>
