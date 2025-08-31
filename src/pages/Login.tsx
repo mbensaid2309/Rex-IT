@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import { type FormEvent } from 'react';
 import { useNavigate, useLocation, useSearchParams, type Location } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const Login: React.FC = () => {
+const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isRegistering, setIsRegistering] = useState(searchParams.get('register') === 'true');
+  const isRegistering = searchParams.get('register') === 'true';
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: Location })?.from?.pathname || '/';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     login();
     navigate(from, { replace: true });
   };
+
+  const showLogin = () => setSearchParams({});
+  const showRegister = () => setSearchParams({ register: 'true' });
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -56,10 +59,7 @@ const Login: React.FC = () => {
               Vous avez déjà un compte ?{' '}
               <button
                 type="button"
-                onClick={() => {
-                  setIsRegistering(false);
-                  setSearchParams({});
-                }}
+                onClick={showLogin}
                 className="text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Se connecter
@@ -70,10 +70,7 @@ const Login: React.FC = () => {
               Nouveau sur Rex IT ?{' '}
               <button
                 type="button"
-                onClick={() => {
-                  setIsRegistering(true);
-                  setSearchParams({ register: 'true' });
-                }}
+                onClick={showRegister}
                 className="text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Créer un compte
