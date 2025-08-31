@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { isAuthenticated, logout } = useAuth();
-  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
