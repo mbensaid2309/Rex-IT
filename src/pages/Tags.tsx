@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Hash, TrendingUp, Users } from 'lucide-react';
 import { mockTags } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 
 const Tags: React.FC = () => {
   const sortedTags = [...mockTags].sort((a, b) => b.count - a.count);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -88,7 +90,7 @@ const Tags: React.FC = () => {
           Les tags sont créés automatiquement selon vos contributions.
         </p>
         <Link
-          to="/create"
+          to={isAuthenticated ? '/create' : '/login'}
           className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
         >
           Créer un REX

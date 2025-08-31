@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, MessageCircle, ThumbsUp, ThumbsDown, User } from 'lucide-react';
+import { Calendar, MessageCircle, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { REX } from '../types';
 
 interface REXCardProps {

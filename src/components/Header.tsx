@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Moon, Sun, Menu, X, Plus, User } from 'lucide-react';
+import { Moon, Sun, Menu, X, Plus, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -41,7 +43,7 @@ const Header: React.FC = () => {
               Tags
             </Link>
             <Link
-              to="/create"
+              to={isAuthenticated ? '/create' : '/login'}
               className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <Plus className="w-4 h-4" />
@@ -99,7 +101,7 @@ const Header: React.FC = () => {
                 Tags
               </Link>
               <Link
-                to="/create"
+                to={isAuthenticated ? '/create' : '/login'}
                 className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors w-fit"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
