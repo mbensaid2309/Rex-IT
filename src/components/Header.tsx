@@ -3,12 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X, Plus, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const { isAuthenticated, logout } = useAuth();
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -60,13 +61,52 @@ const Header: React.FC = () => {
             >
               {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
-            
-            <Link
-              to="/profile"
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-            >
-              <User className="w-5 h-5" />
-            </Link>
+
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                >
+                  <User className="w-5 h-5" />
+                </button>
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      Profil
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Se déconnecter
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Link
+                  to="/login"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/login?register=true"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  Inscription
+                </Link>
+              </div>
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -108,6 +148,43 @@ const Header: React.FC = () => {
                 <Plus className="w-4 h-4" />
                 <span>Créer un REX</span>
               </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className="text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-gray-700 dark:text-gray-300"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Profil
+                  </Link>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="text-sm font-medium text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Se déconnecter
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-gray-700 dark:text-gray-300"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/login?register=true"
+                    className="text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-gray-700 dark:text-gray-300"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Inscription
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         )}
